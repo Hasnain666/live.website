@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percentage Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #c4b1df 0%, #16141d 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .calculator-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .calculator {
+            padding: 15px;
+        }
+        
+        .input-group {
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus {
+            border-color: #42a5f5;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(66, 165, 245, 0.2);
+        }
+        
+        button {
+            background: linear-gradient(135deg, #3d80be 0%, #1680dd 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin: 30px 0 15px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #55a0eb 0%, #1dce8a 100%);
+        }
+        
+        .result {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2e7d32;
+            display: none;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .signature {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .examples {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .example-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .example-card:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 600px) {
+            .calculator-container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .result {
+                font-size: 1.5rem;
+                padding: 20px;
+            }
+            
+            .examples {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>Calculate Discount</h1>
+        <strong>Simple And Easy</strong>
+        
+        <div class="calculator">
+            <div class="input-group">
+                <label for="amount"style>&#8377; Original Amount:</label>
+                <input type="number" id="amount" placeholder="Enter amount" value="">
+            </div>
+            
+            <div class="input-group">
+                <label for="percentage"> % Percentage:</label>
+                <input type="number" id="percentage" placeholder="Enter percentage" value="">
+            </div>
+            
+            <div class="input-group">
+                <label for="calcType"><i class="fas fa-calculator"></i> Calculation Type:</label>
+                <select id="calcType">
+                    <option value="discount">Discount (X% OFF)</option>
+                    <option value="tax">Tax/Increase (X% ADD)</option>
+                    <option value="percentageOf">Percentage of Amount</option>
+                </select>
+            </div>
+            
+            <button id="calculate">
+                <i class="fas fa-calculator"></i> Answer 👀
+            </button>
+            
+            <div class="result" id="result">
+                <!-- Result will appear here -->
+            </div>
+            
+        </div>
+        
+        <div class="signature">
+            <p>Thank you Visiting Web-App ❤️Alam</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('calculate').addEventListener('click', function() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const percentage = parseFloat(document.getElementById('percentage').value);
+            const calcType = document.getElementById('calcType').value;
+            
+            if (isNaN(amount) || isNaN(percentage)) {
+                alert('Please enter valid numbers');
+                return;
+            }
+            
+            let resultText = '';
+            const decimal = percentage / 100;
+            
+            switch(calcType) {
+                case 'discount':
+                    const discount = amount * decimal;
+                    const finalPrice = amount - discount;
+                    resultText = `Discount: ${discount.toFixed(2)}<br>Final Price: ${finalPrice.toFixed(2)}`;
+                    break;
+                    
+                case 'tax':
+                    const tax = amount * decimal;
+                    const total = amount + tax;
+                    resultText = `Tax: $${tax.toFixed(2)}<br>Total: $${total.toFixed(2)}`;
+                    break;
+                    
+                case 'percentageOf':
+                    const value = amount * decimal;
+                    resultText = `${percentage}% of $${amount} = $${value.toFixed(2)}`;
+                    break;
+            }
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = resultText;
+            resultDiv.style.display = 'block';
+        });
+        
+        // Function to set example values
+        function setExample(amount, percentage, type) {
+            document.getElementById('amount').value = amount;
+            document.getElementById('percentage').value = percentage;
+            document.getElementById('calcType').value = type;
+            
+            // Trigger calculation
+            document.getElementById('calculate').click();
+        }
+    </script>
+</body>
+</html>
